@@ -1066,6 +1066,10 @@
     - role: galaxy/wazuh
     # /role-specific:wazuh
 
+    # role-specific:warpgate
+    - role: galaxy/warpgate
+    # /role-specific:warpgate
+
     # role-specific:weblate
     - role: galaxy/weblate
     # /role-specific:weblate

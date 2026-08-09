@@ -268,6 +268,7 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [VersaTiles](https://versatiles.org) | Vector tile generator & server from OpenStreetMap | [Link](services/versatiles.md) |
 | [Vikunja](https://vikunja.io/) | To-do app | [Link](services/vikunja.md) |
 | [Wazuh](https://wazuh.com/) | Security platform providing SIEM, threat detection, and compliance monitoring | [Link](services/wazuh.md) |
+| [Warpgate](https://warpgate.tech/) | Secure SSH gateway for teams and organizations | [Link](services/warpgate.md) |
 | [Weblate](https://weblate.org/) | Web-based translation tool with version control integration | [Link](services/weblate.md) |
 | [Wetty](https://github.com/butlerx/wetty) | An SSH terminal over HTTP/HTTPS | [Link](services/wetty.md) |
 | [Wikimore](https://git.private.coffee/PrivateCoffee/wikimore) | Frontend for Wikipedia projects | [Link](services/wikimore.md) |

@@ -1036,6 +1036,10 @@
   version: v2.5.0-0
   name: vikunja
   activation_prefix: vikunja_
+- src: git+https://forgejo.littlecedar.net/littlecedar/ansible-role-mash-warpgate.git
+  version: main
+  name: warpgate
+  activation_prefix: warpgate_
 - src: git+https://github.com/spatterIight/ansible-role-wazuh.git
   version: v4.14.7-0
   name: wazuh

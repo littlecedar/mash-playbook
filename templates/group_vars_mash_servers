@@ -1393,7 +1393,12 @@ mash_playbook_devture_systemd_service_manager_services_list_auto_itemized:
     {{ ({'name': (wazuh_indexer_identifier + '.service'), 'priority': 2000, 'restart_necessary': (wazuh_indexer_restart_necessary | bool), 'groups': ['mash', 'wazuh']} if wazuh_enabled else omit) }}
   - |-
     {{ ({'name': (wazuh_dashboard_identifier + '.service'), 'priority': 2000, 'restart_necessary': (wazuh_dashboard_restart_necessary | bool), 'groups': ['mash', 'wazuh']} if wazuh_enabled else omit) }}
-  # /role-specific:wazuh
+   # /role-specific:wazuh
+
+  # role-specific:warpgate
+  - |-
+    {{ ({'name': (warpgate_identifier + '.service'), 'priority': 2000, 'restart_necessary': (warpgate_restart_necessary | bool), 'groups': ['mash', 'warpgate']} if warpgate_enabled else omit) }}
+  # /role-specific:warpgate
 
   # role-specific:weblate
   - |-
@@ -2282,9 +2287,20 @@ mash_playbook_postgres_managed_databases_auto_itemized:
         'password': vikunja_database_postgres_password,
       } if vikunja_enabled and (vikunja_database_postgres_hostname == postgres_connection_hostname or vikunja_database_postgres_socket_enabled) and vikunja_database_type == 'postgres' else omit)
     }}
-  # /role-specific:vikunja
+   # /role-specific:vikunja
 
-  # role-specific:weblate
+  # role-specific:warpgate
+  - |-
+    {{
+      ({
+        'name': warpgate_database_name,
+        'username': warpgate_database_user,
+        'password': warpgate_database_password,
+      } if warpgate_enabled and (warpgate_database_host == postgres_connection_hostname or warpgate_database_socket_enabled) else omit)
+    }}
+  # /role-specific:warpgate
+
+   # role-specific:weblate
   - |-
     {{
       ({
@@ -16816,6 +16832,78 @@ vikunja_environment_variables_typesense_apikey: "{{ typesense_environment_variab
 
 
 
+# role-specific:warpgate
+########################################################################
+#                                                                      #
+# warpgate                                                             #
+#                                                                      #
+########################################################################
+
+warpgate_enabled: false
+
+warpgate_identifier: "{{ mash_playbook_service_identifier_prefix }}warpgate"
+
+warpgate_base_path: "{{ mash_playbook_base_path }}/{{ mash_playbook_service_base_directory_name_prefix }}warpgate"
+
+warpgate_config_path: "{{ warpgate_base_path }}/config"
+warpgate_data_path: "{{ warpgate_base_path }}/data"
+
+# Warpgate container runs as root
+warpgate_uid: "0"
+warpgate_gid: "0"
+
+warpgate_systemd_required_services_list_auto: |
+ {{
+   ([postgres_identifier ~ '.service'] if postgres_enabled and (warpgate_database_host == postgres_connection_hostname or warpgate_database_socket_enabled) else [])
+ }}
+
+# Systemd / Docker settings
+warpgate_systemd_service_name: "warpgate"
+warpgate_container_name: "warpgate"
+warpgate_docker_network: "mash"
+
+# Port settings
+warpgate_ssh_port: 2222
+warpgate_http_port: 8888
+warpgate_mysql_port: 33306
+warpgate_postgres_proxy_port: 5432
+
+# Hostname
+warpgate_hostname: "warpgate.{{ mash_base_domain | default('example.com') }}"
+
+# Database settings
+warpgate_database_engine: "postgres"
+warpgate_database_host: "mash-postgres"
+warpgate_database_port: 5432
+warpgate_database_name: "warpgate"
+warpgate_database_user: "warpgate"
+warpgate_database_password: ""
+
+# Authentik / OIDC Integration
+# By default, Authentik integration is enabled if mash_authentik_enabled is true.
+# You must provide warpgate_sso_client_id and warpgate_sso_client_secret.
+warpgate_authentik_integration_enabled: "{{ mash_authentik_enabled | default(false) }}"
+warpgate_sso_client_id: ""
+warpgate_sso_client_secret: ""
+# Default issuer URL follows Authentik patterns in MASH
+warpgate_sso_issuer_url: "https://authentik.{{ mash_authentik_domain | default(mash_base_domain | default('example.com')) }}/application/o/warpgate/"
+
+# Troubleshooting / Logging
+warpgate_log_level: "info"
+
+# Uninstall settings
+warpgate_uninstall_remove_docker_image: false
+warpgate_uninstall_remove_data: false
+
+########################################################################
+#                                                                      #
+# /warpgate                                                            #
+#                                                                      #
+########################################################################
+# /role-specific:warpgate
+
+
+
 # role-specific:wazuh
 ########################################################################
 #                                                                      #
@@ -17382,9 +17470,9 @@ yourls_container_labels_traefik_entrypoints: "{{ traefik_entrypoint_primary }}"
 yourls_container_labels_traefik_tls_certResolver: "{{ traefik_certResolver_primary }}"
 # /role-specific:traefik
 
-########################################################################
-#                                                                      #
-# /yourls                                                              #
-#                                                                      #
-########################################################################
-# /role-specific:yourls
+ ########################################################################
+ #                                                                      #
+ # /yourls                                                              #
+ #                                                                      #
+ ########################################################################
+ # /role-specific:yourls
