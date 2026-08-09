@@ -9,6 +9,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 The playbook can install and configure [Warpgate](https://warpgate.tech/), a secure SSH gateway for teams and organizations, for you.
 
 Warpgate is a smart SSH, HTTPS, and MySQL bastion host that provides secure access to your servers and services. It features:
+
 - Docker-based deployment
 - Systemd service management
 - Support for Postgres, MySQL, and SQLite backends
@@ -79,6 +80,7 @@ After running the installation command, the Warpgate service becomes available a
 ### Ports
 
 Warpgate exposes the following ports by default:
+
 - SSH port: `2222`
 - HTTP port: `8888`
 - MySQL proxy: `33306`
