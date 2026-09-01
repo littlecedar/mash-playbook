@@ -1,3 +1,21 @@
+# 2026-08-24
+
+## (Backward Compatibility Break) KeyDB support removed
+
+This only affects you if you have [KeyDB](docs/services/keydb.md) enabled.
+
+KeyDB has been removed from the playbook, because the KeyDB project has been unmaintained since 2023 — its last release (6.3.4) dates from then. The role that installed it ([ansible-role-keydb](https://github.com/mother-of-all-self-hosting/ansible-role-keydb)) has been deprecated.
+
+[Valkey](docs/services/valkey.md) — also a Redis fork, protocol-compatible with KeyDB — is a well-maintained alternative and has been the playbook's recommendation since 2024-11-23. Point services that used your KeyDB instance at a Valkey instance instead.
+
+The playbook will complain about any remaining `keydb_*` variables in your configuration. Uninstalling the service from your server is a manual step — see [the KeyDB page](docs/services/keydb.md) for the commands.
+
+# 2026-08-20
+
+## Updated Infisical requires manual database migration from MongoDB to Postgres
+
+[Infisical](docs/services/infisical.md) transitioned from MongoDB to Postgres backend on [v0.46.11](https://hub.docker.com/layers/infisical/infisical/v0.46.11-postgres/). The role to install the application ([ansible-role-infisical](https://github.com/mother-of-all-self-hosting/ansible-role-infisical)) does not provide an automated method to conduct database migration from MongoDB, so it is necessary to conduct manual migration if you have deployed an old Infisical instance with the playbook and wish to keep the data. Refer to [this page](https://infisical.com/docs/self-hosting/guides/mongo-to-postgres) for details about migration.
+
 # 2026-08-06
 
 ## (Backward Compatibility Break) Jitsi no longer uses Colibri WebSockets

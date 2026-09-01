@@ -8,6 +8,32 @@
   "labels": [
     "dependencies"
   ],
+  "hostRules": [
+    {
+      "matchHost": "https://codeberg.org",
+      "concurrentRequestLimit": 2,
+      "maxRequestsPerSecond": 2
+    },
+    {
+      "matchHost": "https://iris.radicle.network",
+      "concurrentRequestLimit": 2,
+      "maxRequestsPerSecond": 2
+    }
+  ],
+  "branchConcurrentLimit": 5,
+  "prConcurrentLimit": 3,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update the self-hosted Renovate runner version",
+      "managerFilePatterns": [
+        "/^\\.github\\/workflows\\/renovate\\.yml$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) packageName=(?<packageName>\\S+)\\s+MASH_RENOVATE_VERSION: '(?<currentValue>[^']+)'"
+      ]
+    }
+  ],
   "packageRules": [
     {
       "ignoreUnstable": false,
@@ -18,6 +44,29 @@
         "https://gitlab.com{/,}**",
         "https://iris.radicle.network{/,}**"
       ]
+    },
+    {
+      "description": "Automerge version bumps of roles maintained in the MASH organization and of devture roles (via branch push - no PR)",
+      "matchManagers": ["ansible-galaxy"],
+      "matchSourceUrls": [
+        "https://github.com/devture/com.devture.ansible.role{/,}**",
+        "https://github.com/mother-of-all-self-hosting{/,}**"
+      ],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "matchSourceUrls": [
+        "https://iris.radicle.network{/,}**"
+      ],
+      "reviewers": ["luixxiul"]
+    },
+    {
+      "description": "Automerge updates of the self-hosted Renovate runner (via branch push - no PR)",
+      "matchManagers": ["custom.regex"],
+      "matchDepNames": ["mash-renovate-runner"],
+      "automerge": true,
+      "automergeType": "branch"
     }
   ],
   "github-actions": {
@@ -31,6 +80,7 @@
   "pre-commit": {
     "enabled": true,
     "automerge": true,
-    "automergeType": "branch"
+    "automergeType": "branch",
+    "schedule": ["* * * * 1"]
   }
 }
