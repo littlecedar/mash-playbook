@@ -426,6 +426,10 @@
     - role: galaxy/grafana
     # /role-specific:grafana
 
+    # role-specific:greenbone
+    - role: galaxy/greenbone
+    # /role-specific:greenbone
+
     # role-specific:headplane
     - role: galaxy/headplane
     # /role-specific:headplane

@@ -7233,6 +7233,30 @@ grafana_container_labels_traefik_tls_certResolver: "{{ traefik_certResolver_prim
 
 
 
+# role-specific:greenbone
+########################################################################
+#                                                                      #
+# greenbone                                                            #
+#                                                                      #
+########################################################################
+
+greenbone_enabled: false
+
+greenbone_identifier: "{{ mash_playbook_service_identifier_prefix }}greenbone"
+
+greenbone_base_path: "{{ mash_playbook_base_path }}/{{ mash_playbook_service_base_directory_name_prefix }}greenbone"
+
+# Centurion already runs at /opt/siem/greenbone on port 9443.
+# Set greenbone_base_path in that host's vars before enabling the role.
+
+########################################################################
+#                                                                      #
+# /greenbone                                                           #
+#                                                                      #
+########################################################################
+# /role-specific:greenbone
+
+
 # role-specific:headplane
 ########################################################################
 #                                                                      #
