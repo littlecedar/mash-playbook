@@ -8,6 +8,31 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Developer documentation
 
+## Style guide for playbook developers
+
+This section describes the conventions used when developing this playbook and writing its documentation. Follow it when adding a new component (a role and its documentation page) or editing existing ones, so that everything stays consistent.
+
+The guide is meant for anyone preparing a contribution. If you find existing files that deviate from it, feel free to send a pull request bringing them in line.
+
+### Language
+
+- Write in English, using American spelling ("customize", not "customise").
+- Proper nouns are capitalized: Ansible, Docker, Traefik, Postgres, Grafana, etc. Some projects deliberately brand themselves in lowercase (e.g. `authentik`, `coturn`) and keep their lowercase name even at the start of a sentence. When in doubt, follow the upstream project's own spelling.
+
+### Markdown style
+
+- Do not hard-wrap prose. Each paragraph is a single line in the source file, no matter how long. This keeps the source and the rendered result consistent and makes diffs easier to work with.
+- Number ordered lists sequentially (`1.`, `2.`, `3.`), instead of relying on the Markdown renderer to fix a repeated (`1.`, `1.`, `1.`) or wrong (`1.`, `2.`, `4.`) sequence.
+- Use `-` for unordered lists.
+- Wrap variable names, file paths, commands, domains, and service names in backticks (`` ` ``).
+- Use fenced code blocks with a language hint (```` ```yaml ````, ```` ```sh ````) for configuration and command examples.
+- Use relative links when linking between documentation pages (e.g. `[Configuring DNS](configuring-dns.md)`).
+
+### Miscellaneous
+
+- Link to the role's documentation instead of duplicating its content (installation steps, distro-specific commands, etc.). Copied instructions go stale; links age much better.
+- Reuse existing files to minimize inconsistencies.
+
 ## Support a new service | Create your own role
 
 Are you interested in adding a new service which is not yet [available on this playbook](supported-services.md)? Great! By following the guide below, you can easily implement one to the playbook.
@@ -294,6 +319,13 @@ If the role is regarded to have been abandoned by the author from the viewpoint 
 Please keep an eye on the roles maintained by the MASH organization to keep yours up-to-date by adding proper changes if any. Since the background of the decision for the changes are usually not announced (though you may find references in a commit message), you might as well to ask an organization member on the Matrix room about changes you are expected to apply.
 
 Please do not hesitate to ask for help to let the community members help you! 👋
+
+## Reviewing role dependency updates
+
+Renovate opens pull requests for Ansible role version updates instead of merging their branches
+directly. Review the released role changes and the playbook wiring before merging; a role update may
+need a playbook adaptation even when its role tests pass. Other dependency classes retain their
+separate Renovate policies.
 
 ## Maintaining the Renovate runner
 

@@ -1,3 +1,53 @@
+# 2026-10-15
+
+## Uptime Kuma v2 requires a backup before upgrading
+
+This affects existing Uptime Kuma v1 installations. Before rerunning the playbook, stop Uptime Kuma and back up its data directory (`uptime_kuma_data_path`, normally `/mash/uptime-kuma/data`). The first v2 start migrates the database; allow it to finish without restarting the service or host. Migration can take hours, and interruption requires restoring the backup.
+
+Debian/Raspbian Buster hosts must be upgraded to a newer OS before moving to v2: upstream reports container startup failures with Buster's `libseccomp2`. See the [upstream migration guide](https://github.com/louislam/uptime-kuma/wiki/Migration-From-v1-To-v2) for other application changes.
+
+Follow the [role's upgrade instructions](https://github.com/mother-of-all-self-hosting/ansible-role-uptime_kuma/blob/v2.5.6-0/docs/configuring-uptime-kuma.md#upgrading-from-uptime-kuma-1x-to-2x) before upgrading. The role starts the upgrade automatically and does not make the backup or stop with a validation error to remind you.
+
+# 2026-10-12
+
+## (Backward Compatibility Break) TSDProxy upgraded to v2
+
+This only affects you if you have [TSDProxy](docs/services/tsdproxy.md) enabled and use proxy lists (`tsdproxy_config_files`).
+
+TSDProxy v2 changed the format of proxy list files. The role does not manage these files, so it cannot check or convert them: before re-running the playbook, migrate them by hand following the [upstream upgrade guide](https://almeidapaulopt.github.io/tsdproxy/docs/upgrading/from-v1/), and define them with `tsdproxy_config_lists` instead of `tsdproxy_config_files`.
+
+The role reports its other changes (renamed variables, TSDProxy v1 keys in custom configuration) with actionable errors, and container labels in the TSDProxy v1 format keep working. See the [role's upgrade notes](https://github.com/mother-of-all-self-hosting/ansible-role-tsdproxy#upgrading-from-tsdproxy-v1) for details.
+
+# 2026-10-10
+
+## (Backward Compatibility Break) Safer Docker cleanup, and no more journald vacuuming by default
+
+This only affects you if you use the [cleanup](docs/services/system.md#cleanup) role (any `system_cleanup_*` variable in your `vars.yml`).
+
+The role has been upgraded to v2:
+
+- **`system_cleanup_docker`** no longer runs `docker image prune -a` and `docker volume prune`. It now removes stopped containers and only those unused images which a newer image of the same repository superseded at least 3 days ago. Unused images without a newer version (of stopped services, timer-only containers, locally built images) are kept, and anonymous volumes are left alone unless you enable `system_cleanup_docker_config_remove_anonymous_volumes`. To remove superseded images right away, set `system_cleanup_docker_config_superseded_images_grace_period_days: 0`. The cleanup now lives in a script (`/mash/system-cleanup/bin/cleanup-docker`), which you can also run by hand (`--dry-run` shows what it would remove) or on a schedule (`system_cleanup_docker_timer_enabled: true`).
+- **The journald vacuum timer** (`journalctl --vacuum-time=7d`) was installed on every host, whatever `system_cleanup_logs` said. It now follows `system_cleanup_logs`, which defaults to `false`, so the timer gets removed. journald already limits the space logs take up on its own. To keep the timer, set `system_cleanup_logs: true`.
+- **`purge-old-kernels`** (`system_cleanup_kernels`) moved from `/usr/local/bin` to `/mash/system-cleanup/bin`.
+
+See the role's [upgrade notes](https://github.com/mother-of-all-self-hosting/ansible-role-cleanup#upgrading-to-v2) for details.
+
+# 2026-10-03
+
+## The playbook's container image is no longer published
+
+This only affects you if you run the playbook using the `ghcr.io/mother-of-all-self-hosting/mash-playbook` container image.
+
+This image bundled the playbook and its roles, but was never part of the documented ways of running the playbook. Its build, which fetched every role from many separate git hosts, failed regularly because of temporary network errors. We have stopped building it, and the existing image will no longer receive updates.
+
+If you used it, clone the playbook and run it with your own Ansible, or with the [`ghcr.io/devture/ansible`](https://github.com/devture/docker-ansible/pkgs/container/ansible) container image as described in [Using Ansible via Docker](docs/ansible.md#using-ansible-via-docker).
+
+# 2026-09-27
+
+## Jellyfin 12 requires preparation before upgrading
+
+This affects users with Jellyfin enabled. Before rerunning the playbook, stop Jellyfin and make a full backup of its data and configuration. Check for usernames that differ only by capitalization, and remove third-party plugins until versions compatible with Jellyfin 12 are available. After the upgrade, run a full library scan; let the database migrations and first scan finish without interruption. The database changes cannot be rolled back without restoring a backup. See the [Jellyfin 12 release notes](https://jellyfin.org/posts/jellyfin-release-12.0/) for details.
+
 # 2026-08-24
 
 ## (Backward Compatibility Break) KeyDB support removed

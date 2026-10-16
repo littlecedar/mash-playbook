@@ -68,15 +68,7 @@ forgejo_path_prefix: /forgejo
 
 ### Select database to use (optional)
 
-By default Forgejo is configured to use Postgres, but you can choose other database such as SQLite and MySQL (MariaDB).
-
-To use MariaDB, add the following configuration to your `vars.yml` file:
-
-```yaml
-forgejo_database_type: mysql
-```
-
-Refer to [this section](https://github.com/mother-of-all-self-hosting/ansible-role-forgejo/blob/main/docs/configuring-forgejo.md#specify-database-optional) on the role's documentation for details.
+By default Forgejo is configured to use Postgres, but you can choose other database such as SQLite and MySQL (MariaDB). Refer to [this section](https://github.com/mother-of-all-self-hosting/ansible-role-forgejo/blob/main/docs/configuring-forgejo.md#specify-database-optional) on the role's documentation for details.
 
 ### Configure SSH port for Forgejo (optional)
 
@@ -109,26 +101,7 @@ To actually have the service use (and get messages sent through the exim-relay s
 
 ### Configuring OAuth2/OpenID Connect login (optional)
 
-You can configure Forgejo to authenticate users through an OpenID Connect provider.
-
-Add variables like these to your `vars.yml` file:
-
-```yaml
-forgejo_oidc_client_enabled: true
-
-forgejo_oidc_provider_name: "authentik"
-forgejo_oidc_client_id: "FORGEJO_OIDC_CLIENT_ID_HERE"
-forgejo_oidc_client_secret: "FORGEJO_OIDC_CLIENT_SECRET_HERE"
-forgejo_oidc_auto_discover_url: "https://sso.example.com/application/o/forgejo/.well-known/openid-configuration"
-```
-
-To apply only OAuth configuration tasks, run:
-
-```sh
-just run-tags configure-oauth-forgejo
-```
-
-Refer to [this section](https://github.com/mother-of-all-self-hosting/ansible-role-forgejo/blob/main/docs/configuring-forgejo.md#configure-oauth2openid-connect-login-optional) on the role's documentation for additional options.
+You can configure Forgejo to authenticate users through an OpenID Connect provider. Refer to [this section](https://github.com/mother-of-all-self-hosting/ansible-role-forgejo/blob/main/docs/configuring-forgejo.md#configure-oauth2openid-connect-login-optional) on the role's documentation for details.
 
 ### Integrating with Prometheus (optional)
 
@@ -183,6 +156,7 @@ Nevertheless, upgrades may be possible with some manual work. Refer to [this sec
 
 - [Forgejo Runner](forgejo-runner.md) — Runner to use with Forgejo Actions
 - [Gitea](gitea.md) — Software forge (Git hosting service, etc.)
+- [GitLab](gitlab.md) — Complete DevOps platform (Git hosting service, CI/CD, etc.)
 - [Radicle node](radicle-node.md) — Network daemon for the [Radicle](https://radicle.dev/) network, a peer-to-peer code collaboration stack built on Git
 - [Woodpecker CI](woodpecker-ci.md) — Extensible Continuous Integration (CI) engine
 

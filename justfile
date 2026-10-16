@@ -5,6 +5,9 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+# Set inventory from $ANSIBLE_INVENTORY if set, otherwise set the default
+inventory := env("ANSIBLE_INVENTORY", "inventory/hosts")
+
 # mise (dev tool version manager)
 mise_data_dir := env("MISE_DATA_DIR", justfile_directory() / "var/mise")
 mise_trusted_config_paths := justfile_directory() / "mise.toml"
@@ -27,7 +30,7 @@ roles: _requirements-yml
     #!/usr/bin/env sh
     if [ -x "$(command -v agru)" ]; then
         echo "[NOTE] This command just updates the roles, but if you want to update everything at once (playbook, roles, etc.) - use 'just update'"
-        agru -r {{ justfile_directory() }}/requirements.yml -no-tui
+        agru -r {{ justfile_directory() }}/requirements.yml -p roles/galaxy/ -no-tui
     else
         echo "[NOTE] You are using the standard ansible-galaxy tool to install roles, which is slow and lacks other features. We recommend installing the 'agru' tool to speed up the process: https://github.com/etkecc/agru#where-to-get"
         echo "[NOTE] This command just updates the roles, but if you want to update everything at once (playbook, roles, etc.) - use 'just update'"
@@ -92,7 +95,7 @@ update *flags: _requirements-yml update-playbook-only
     #!/usr/bin/env sh
     if [ -x "$(command -v agru)" ]; then
         echo {{ if flags == "" { "Installing roles pinned in requirements.yml..." } else if flags == "-u" { "Updating roles and pinning new versions in requirements.yml..." } else { "Unknown flags passed" } }}
-        agru -r {{ templates_directory_path }}/requirements.yml -no-tui {{ flags }}
+        agru -r {{ templates_directory_path }}/requirements.yml -p roles/galaxy/ -no-tui {{ flags }}
     else
         echo "[NOTE] You are using the standard ansible-galaxy tool to install roles, which is slow and lacks other features. We recommend installing the 'agru' tool to speed up the process: https://github.com/etkecc/agru#where-to-get"
         echo "Installing roles..."
@@ -108,9 +111,7 @@ update *flags: _requirements-yml update-playbook-only
 # Updates the playbook without installing/updating Ansible roles
 update-playbook-only:
     @echo "Updating playbook..."
-    @git stash -q
-    @git pull -q
-    @-git stash pop -q
+    @git pull -q --ff-only
 
 # Invokes mise with the project-local data directory
 mise *args: _ensure_mise_data_directory
@@ -194,7 +195,7 @@ run +extra_args: _requirements-yml _setup-yml _group-vars-mash-servers
     #!/usr/bin/env sh
     set -eu
     if ! [ -x "$(command -v etkepass)" ]; then
-        ansible-playbook -i inventory/hosts setup.yml {{ extra_args }}
+        ansible-playbook -i {{ inventory }} setup.yml {{ extra_args }}
         exit $?
     fi
     export SSH_ASKPASS="$(command -v etkepass)"
@@ -221,7 +222,7 @@ run +extra_args: _requirements-yml _setup-yml _group-vars-mash-servers
     if [ -n "$_dhosts" ]; then
         (cd inventory && etkepass -l "$_dhosts" --decrypt-inv-to "$_tmpdir")
     fi
-    ansible-playbook -i inventory/hosts -i "$_tmpdir" setup.yml {{ extra_args }}
+    ansible-playbook -i {{ inventory }} -i "$_tmpdir" setup.yml {{ extra_args }}
 
 # Runs the playbook with the given list of comma-separated tags and optional arguments
 run-tags tags *extra_args:

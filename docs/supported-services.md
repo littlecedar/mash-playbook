@@ -33,6 +33,7 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [AnonymousOverflow](https://github.com/httpjamesm/AnonymousOverflow) | Frontend for StackOverflow | [Link](services/anonymousoverflow.md) |
 | [Apache Answer](https://answer.apache.org/) | Q&A community platform software for teams | [Link](services/answer.md) |
 | [Apache NiFi](https://nifi.apache.org/) | An easy to use, powerful, and reliable system to process and distribute data | [Link](services/nifi.md) |
+| [Apache NiFi Registry](https://nifi.apache.org/projects/registry/) | Central storage and management of versioned flows shared across Apache NiFi instances | [Link](services/nifi-registry.md) |
 | [Apache Tika Server](https://github.com/apache/tika-docker) | Detect and extract metadata and text from different file types (such as PPT, XLS, and PDF) | [Link](services/tika.md) |
 | [APISIX](https://apisix.apache.org/docs/apisix/getting-started/README/) | An API Gateway, Ingress Controller, etc | [Link](services/apisix.md) |
 | [Apprise API](https://github.com/caronc/apprise-api) | Lightweight REST framework that wraps the [Apprise](https://github.com/caronc/apprise) Notification Library | [Link](services/apprise.md) |
@@ -46,12 +47,13 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [Bar Assistant](https://github.com/karlomikus/bar-assistant/) | Managing cocktail recipes at your home bar with cocktail-oriented features | [Link](services/barassistant.md) |
 | [Bazarr](https://www.bazarr.media/) | Companion application to Sonarr and Radarr that manages and downloads subtitles | [Link](services/bazarr.md) |
 | [BentoPDF](https://github.com/alam00000/bentopdf) | Client-side PDF editor and converter | [Link](services/bentopdf.md) |
+| [Beszel hub](https://beszel.dev/) | Lightweight server monitoring hub with historical data, Docker stats and alerts | [Link](services/beszel-hub.md) |
 | [Bichon](https://github.com/rustmailer/bichon) | Email archiving server with full-text search function | [Link](services/bichon.md) |
 | [BIND](https://www.isc.org/bind/) | A full-featured DNS server | [Link](services/bind.md) |
 | [bitmagnet](https://bitmagnet.io/) | BitTorrent indexer, DHT crawler, content classifier and search engine | [Link](services/bitmagnet.md) |
 | [BookStack](https://www.bookstackapp.com) | Information organizer and storage | [Link](services/bookstack.md) |
 | [BorgBackup](https://www.borgbackup.org/) (via [borgmatic](https://torsion.org/borgmatic/)) | A deduplicating backup program with optional compression and encryption | [Link](services/backup-borg.md) |
-| [Borg Web UI](https://github.com/karanhudia/borg-ui) | Unofficial web interface for BorgBackup | [Link](services/borg-ui.md) |
+| [Borg UI](https://github.com/karanhudia/borg-ui) | Unofficial web interface for BorgBackup | [Link](services/borg-ui.md) |
 | [Calibre-Web](https://github.com/janeczku/calibre-web) | Web app for browsing, reading and downloading eBooks stored in a [Calibre](https://calibre-ebook.com/) database | [Link](services/calibre-web.md) |
 | [Calibre-Web Automated](https://github.com/crocodilestick/Calibre-Web-Automated) | Web application based on [Calibre-Web](https://github.com/janeczku/calibre-web) with additional features and automation | [Link](services/calibre-web-automated.md) |
 | [Cap Standalone](https://capjs.js.org/guide/standalone/) | Backend of Cap, a POW Captcha | [Link](services/cap.md) |
@@ -106,6 +108,8 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [Funkwhale](https://funkwhale.audio/) | ActivityPub federated streaming server for listening and sharing music | [Link](services/funkwhale.md) |
 | [Ghostfolio](https://ghostfol.io/) | Wealth management software to keep track of assets such as stocks, bonds, ETFs, etc. | [Link](services/ghostfolio.md) |
 | [Gitea](https://gitea.io/) | Software forge (Git hosting service, etc.) | [Link](services/gitea.md) |
+| [GitLab](https://about.gitlab.com/) | Complete DevOps platform (Git hosting service, CI/CD, etc.) | [Link](services/gitlab.md) |
+| [GitLab Runner](https://docs.gitlab.com/runner/) | A runner to use with GitLab CI/CD | [Link](services/gitlab-runner.md) |
 | [Gokapi](https://github.com/Forceu/Gokapi) | Share files that expire after a set number of downloads or days | [Link](services/gokapi.md) |
 | [Gotenberg](https://gotenberg.dev/) | Docker-based API for converting documents to PDF | [Link](services/gotenberg.md) |
 | [GotHub](https://codeberg.org/gothub/gothub) | Frontend for GitHub | [Link](services/gothub.md) |
@@ -175,6 +179,7 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [Neko](https://neko.m1k1o.net/) | A virtual browser or even desktop environment | [Link](services/neko.md) |
 | [NetBox](https://docs.netbox.dev/en/stable/) | Web application that provides [IP address management (IPAM)](https://en.wikipedia.org/wiki/IP_address_management) and [data center infrastructure management (DCIM)](https://en.wikipedia.org/wiki/Data_center_management#Data_center_infrastructure_management) functionality | [Link](services/netbox.md) |
 | [Nextcloud](https://nextcloud.com/) | Popular collaboration solution | [Link](services/nextcloud.md) |
+| [Nginx](https://nginx.org/) | Web server, which can also be used as a reverse proxy, load balancer and HTTP cache | [Link](services/nginx.md) |
 | [noCDNbs](https://git.private.coffee/PrivateCoffee/nocdnbs) | Privacy-friendly cdnjs proxy | [Link](services/nocdnbs.md) |
 | [NodeBB](https://github.com/NodeBB/NodeBB) | Node.js based forum software | [Link](services/nodebb.md) |
 | [Node-RED](https://nodered.org) | Flow-based programming tool | [Link](services/nodered.md) |
@@ -214,8 +219,10 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [Prometheus Postgres Exporter](https://github.com/prometheus-community/postgres_exporter) | A PostgreSQL metric exporter for Prometheus | [Link](services/prometheus-postgres-exporter.md) |
 | [Prometheus SSH Exporter](https://github.com/treydock/ssh_exporter) | SSH probes | [Link](services/prometheus-ssh-exporter.md) |
 | [Promtail](https://grafana.com/docs/loki/latest/send-data/promtail/) | Agent which ships the contents of local logs to a private [Grafana Loki](services/grafana-loki.md) instance | [Link](services/promtail.md) |
+| [Prowlarr](https://prowlarr.com/) | An indexer manager/proxy for Usenet and BitTorrent users | [Link](services/prowlarr.md) |
 | [PruneMate](https://github.com/anoniemerd/PruneMate) | Automatically clean up Docker resources on a schedule | [Link](services/prunemate.md) |
 | [qBittorrent](https://www.qbittorrent.org/) | A BitTorrent client | [Link](services/qbittorrent.md) |
+| [qui](https://getqui.com/) | A fast, modern web interface for qBittorrent | [Link](services/qui.md) |
 | [RabbitMQ](https://www.rabbitmq.com/) | Message-broker which supports AMQP, STOMP, MQTT, etc. | [Link](services/rabbitmq.md) |
 | [Radarr](https://radarr.video/) | A movie organizer/manager for Usenet and BitTorrent users | [Link](services/radarr.md) |
 | [Radicale](https://radicale.org/) | A CalDAV and CardDAV Server (solution for hosting contacts and calendars) | [Link](services/radicale.md) |
@@ -263,6 +270,7 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [transfer.sh](https://github.com/dutchcoders/transfer.sh) | File sharing with the command-line | [Link](services/transfersh.md) |
 | [TSDProxy](https://almeidapaulopt.github.io/tsdproxy/) | A proxy for virtual services in Tailscale | [Link](services/tsdproxy.md) |
 | [Typesense](https://typesense.org) | Typo-tolerant fulltext search engine | [Link](services/typesense.md) |
+| [Unpackerr](https://unpackerr.zip/) | An archive extraction daemon for Sonarr, Radarr, Lidarr and other Starr apps | [Link](services/unpackerr.md) |
 | [Uptime Kuma](https://uptime.kuma.pet/) | A fancy monitoring tool | [Link](services/uptime-kuma.md) |
 | [Valkey](https://valkey.io/) | A flexible distributed key-value datastore that is optimized for caching and other realtime workloads | [Link](services/valkey.md) |
 | [Vaultwarden](https://github.com/dani-garcia/vaultwarden) | A lightweight unofficial and compatible implementation of the [Bitwarden](https://bitwarden.com/) password manager | [Link](services/vaultwarden.md) |

@@ -27,7 +27,7 @@ ntfy lets you send push notifications to your phone or desktop via scripts from 
 
 See the project's [documentation](https://docs.ntfy.sh/) to learn what it does and why it might be useful to you.
 
-The [Ansible role for ntfy](https://github.com/mother-of-all-self-hosting/ansible-role-ntfy) is developed and maintained by the MASH project. For details about configuring ntfy, you can check them via:
+For details about configuring the [Ansible role for ntfy](https://github.com/mother-of-all-self-hosting/ansible-role-ntfy), you can check them via:
 
 - 🌐 [the role's documentation](https://github.com/mother-of-all-self-hosting/ansible-role-ntfy/blob/main/docs/configuring-ntfy.md) online
 - 📁 `roles/galaxy/ntfy/docs/configuring-ntfy.md` locally, if you have [fetched the Ansible roles](../installing.md)
@@ -143,7 +143,7 @@ ntfy_container_labels_traefik_metrics_middleware_basic_auth_users: ""
 
 To receive push notifications from the ntfy server, you need to **install [the ntfy Android/iOS app](https://docs.ntfy.sh/subscribe/phone/)**, **log in to the account on the ntfy app** if you have enabled the access control, and then **subscribe to a topic** where messages will be published. You can also send/receive notifications on the ntfy's web app at `example.com`.
 
-Refer to [this section](https://github.com/mother-of-all-self-hosting/ansible-role-ntfy/blob/main/docs/configuring-ntfy.md#usage) on the role's documentation for details.
+Refer to [this section](https://github.com/mother-of-all-self-hosting/ansible-role-ntfy/blob/main/docs/configuring-ntfy.md#usage) on the role's documentation for details about the usage.
 
 If you enable [Uptime Kuma](uptime-kuma.md), the self-hosted monitoring tool (hint: this playbook enables it by default on its example `vars.yml` files), it is possible to set it up to have it send notifications to a topic when the monitored web service is down. You can subscribe to the topic both from the ntfy Android/iOS app and the web app.
 

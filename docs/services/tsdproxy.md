@@ -14,6 +14,7 @@ SPDX-FileCopyrightText: 2023 Julian-Samuel Gebühr
 SPDX-FileCopyrightText: 2023 Pierre 'McFly' Marty
 SPDX-FileCopyrightText: 2024 - 2025 Suguru Hirahara
 SPDX-FileCopyrightText: 2025 MASH project contributors
+SPDX-FileCopyrightText: 2026 Bergrübe
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
@@ -25,6 +26,11 @@ The playbook can install and configure [TSDProxy](https://almeidapaulopt.github.
 TSDProxy is an application that automatically creates a proxy to virtual addresses in your [Tailscale](https://tailscale.com/) network.
 
 See the project's [documentation](https://almeidapaulopt.github.io/tsdproxy/docs/) to learn what TSDProxy does and why it might be useful to you.
+
+For details about configuring the [Ansible role for TSDProxy](https://github.com/mother-of-all-self-hosting/ansible-role-tsdproxy), you can check them via:
+
+- 🌐 [the role's documentation](https://github.com/mother-of-all-self-hosting/ansible-role-tsdproxy/blob/main/docs/configuring-tsdproxy.md) online
+- 📁 `roles/galaxy/tsdproxy/docs/configuring-tsdproxy.md` locally, if you have [fetched the Ansible roles](../installing.md)
 
 ## Configuration
 
@@ -46,67 +52,16 @@ tsdproxy_enabled: true
 ########################################################################
 ```
 
-### Set authkey for Tailscale
-
-You also need to set an authkey for Tailscale by adding the following configuration to your `vars.yml` file:
-
-```yaml
-tsdproxy_tailscale_authkey: '' # OR
-
-tsdproxy_tailscale_authkeyfile: '' # use this to load authkey from file. If this is defined, tsdproxy_tailscale_authkey is ignored
-```
-
-Refer to [this page](https://almeidapaulopt.github.io/tsdproxy/docs/advanced/tailscale/) on the official documentation for details.
-
 ## Usage
 
 After running the command for installation, the TSDProxy instance becomes available.
 
-If [ansible-role-container-socket-proxy](https://github.com/mother-of-all-self-hosting/ansible-role-container-socket-proxy) is installed by the playbook (default), the container will use the proxy. If not, the container will mount the Docker socket at `/var/run/docker.sock`. You can change the path by configuring `tsdproxy_docker_socket`.
+Refer to [this section](https://github.com/mother-of-all-self-hosting/ansible-role-tsdproxy/blob/main/docs/configuring-tsdproxy.md#usage) on the role's documentation for details about the usage, including how to add a new service.
 
-Do not forget to adjust the `tsdproxy_docker_endpoint_is_unix_socket` variable to `false` if a TCP endpoint is enabled.
-
-### Adding a new service
-
-This proxy creates a separate Tailscale machine (node) in the Tailscale network for each service, without creating a sidecar container each time.
-
-To add a new service, you have to make sure that the service and proxy are in a same container network. You can do this by adding the proxy to the network of the service or the other way round.
-
-```yaml
-tsdproxy_container_additional_networks_custom:
-  - YOUR-SERVICE-NETWORK
-# OR
-YOUR-SERVICE_container_additional_networks_custom:
-  - "{{ tsdproxy_container_network }}"
-```
-
-The next step is to add the service to the proxy. There are two ways of doing so; one with container labels and the other with a Proxy list.
-
-#### Connecting a service to the proxy via container labels
-
-```yaml
-YOUR-SERVICE_container_labels_additional_labels_custom:
-  - tsdproxy.enable: "true"
-  - tsdproxy.container_port: 8080
-```
-
-The following labels are optional. Please read the [official TSDProxy documentation](https://almeidapaulopt.github.io/tsdproxy/docs/docker/) for more information.
-
-```yaml
-  tsdproxy.name: "my-service"
-  tsdproxy.autodetect: "false"
-  tsdproxy.proxyprovider: "providername"
-  tsdproxy.ephemeral: "false"
-  tsdproxy.funnel: "false"
-```
-
-#### Connecting a service to the proxy via a Proxy list
-
-An alternative way to add a service to the proxy is to use Proxy files.
-
-Please read the [official TSDProxy documentation](https://almeidapaulopt.github.io/tsdproxy/docs/files/) for more information.
-
-You will need to use the `tsdproxy_config_files` variable and add your proxy list file to the directory for configuration files, most likely `/mash/tsdproxy/config/`. It is possible to so so manually or by using [AUX-Files](auxiliary.md).
+>[!NOTE]
+> If [ansible-role-container-socket-proxy](https://github.com/mother-of-all-self-hosting/ansible-role-container-socket-proxy) is installed by the playbook (default), the container will use the proxy. If not, the container will mount the Docker socket at `/var/run/docker.sock`. You can change this by configuring `tsdproxy_docker_endpoint`.
+>
+> Do not forget to set `tsdproxy_docker_endpoint_is_unix_socket` to `false` if a TCP endpoint is enabled.
 
 ## Related services
 

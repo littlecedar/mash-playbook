@@ -33,11 +33,17 @@ A Woodpecker CI installation contains 2 components:
 - one [Woodpecker CI **server**](#woodpecker-ci-server) (web interface, central management node)
 - one or more [Woodpecker CI **agent**](#woodpecker-ci-agent) instances (which run your CI jobs)
 
-It's better to run the **agent** instances elsewhere (not on the source-control server or a server serving anything of value) — on a machine that doesn't contain sensitive data.
+>[!WARNING]
+> It's better to run the **agent** instances elsewhere (not on the source-control server or a server serving anything of value) — on a machine that doesn't contain sensitive data.
 
 Small installations which only run trusted CI jobs can afford to run an agent instance on the source-control server itself.
 
 ## Woodpecker CI server
+
+For details about configuring the [Ansible role for Woodpecker CI server](https://github.com/mother-of-all-self-hosting/ansible-role-woodpecker-ci-server), you can check them via:
+
+- 🌐 [the role's documentation](https://github.com/mother-of-all-self-hosting/ansible-role-woodpecker-ci-server/blob/main/docs/configuring-woodpecker-ci-server.md) online
+- 📁 `roles/galaxy/woodpecker_ci_server/docs/configuring-woodpecker-ci-server.md` locally, if you have [fetched the Ansible roles](../installing.md)
 
 ### Dependencies — Woodpecker CI server
 
@@ -62,28 +68,6 @@ woodpecker_ci_server_enabled: true
 woodpecker_ci_server_hostname: mash.example.com
 woodpecker_ci_server_path_prefix: /ci
 
-# Generate this secret with `openssl rand -hex 32`
-#
-# Note that this playbook only supports agent-specific secrets, which
-# means that if you choose to share this secret with an agent, the
-# server will register it as a non-persistent agent.
-#
-# See the definition of
-# woodpecker_ci_agent_config_agent_secret below for more details.
-woodpecker_ci_server_config_agent_secret: ''
-
-woodpecker_ci_server_config_admins: [YOUR_USERNAME_HERE]
-
-# Add one or more usernames that match your version control system (e.g. Gitea) below.
-# These users will have admin privileges upon signup.
-woodpecker_ci_server_config_admins:
-  - YOUR_USERNAME_HERE
-  - ANOTHER_USERNAME_HERE
-
-# Uncomment the line below if you'll be running Woodpecker CI agents on remote machines.
-# If you'll only run agents on the same machine as the server, you can keep gRPC expose disabled.
-# woodpecker_ci_server_container_labels_traefik_grpc_enabled: true
-
 ########################################################################
 #                                                                      #
 # /woodpecker_ci_server                                                #
@@ -91,21 +75,17 @@ woodpecker_ci_server_config_admins:
 ########################################################################
 ```
 
+#### Set username matching VCS
+
+It is necessary to specify one or more usernames that match your version control system (e.g. Gitea). Refer to [this section](https://github.com/mother-of-all-self-hosting/ansible-role-woodpecker-ci-server/blob/main/docs/configuring-woodpecker-ci-server.md#set-username-matching-vcs) on the role's documentation for details.
+
 #### Select database to use (optional)
 
-By default Woodpecker CI server is configured to use Postgres, but you can choose other database such as SQLite and MySQL (MariaDB).
-
-To use MariaDB, add the following configuration to your `vars.yml` file:
-
-```yaml
-woodpecker_ci_server_database_type: mysql
-```
-
-Set `sqlite3` for a SQLite database.
+By default Woodpecker CI server is configured to use Postgres, but you can choose other database such as SQLite and MySQL (MariaDB). Refer to [this section](https://github.com/mother-of-all-self-hosting/ansible-role-woodpecker-ci-server/blob/main/docs/configuring-woodpecker-ci-server.md#specify-database-optional) on the role's documentation for details.
 
 #### Gitea Integration
 
-The Woodpecker CI server can integrate with [Gitea](gitea.md) using the following **additional** `vars.yml` configuration:
+The Woodpecker CI server can integrate with [Gitea](gitea.md) by adding the following **additional** `vars.yml` configuration:
 
 ```yaml
 woodpecker_ci_server_provider: gitea
@@ -148,70 +128,46 @@ woodpecker_ci_server_container_add_host_ip_address: "{{ ansible_host }}"
 
 After running the command for installation, the Woodpecker CI server becomes available at the URL specified with `woodpecker_ci_server_hostname` and `woodpecker_ci_server_path_prefix`. With the configuration above, the service is hosted at `https://mash.example.com/ci`.
 
-To get started, open the URL with a web browser, and click the **Log in** button. It takes you to Gitea or Forgejo per your configuration, and you can authorize Woodpecker CI with the OAuth 2 application.
-
-Follow the official Woodpecker CI [Getting started](https://woodpecker-ci.org/docs/usage/intro) documentation for additional usage details.
+Refer to [this section](https://github.com/mother-of-all-self-hosting/ansible-role-woodpecker-ci-server/blob/main/docs/configuring-woodpecker-ci-server.md#usage) on the role's documentation for details about the usage.
 
 ## Woodpecker CI agent
 
-As mentioned above, unless you completely trust your CI workloads, it's best to run the Woodpecker CI agent on another machine.
+For details about configuring the [Ansible role for Woodpecker CI agent](https://github.com/mother-of-all-self-hosting/ansible-role-woodpecker-ci-agent), you can check them via:
+
+- 🌐 [the role's documentation](https://github.com/mother-of-all-self-hosting/ansible-role-woodpecker-ci-agent/blob/main/docs/configuring-woodpecker-ci-agent.md) online
+- 📁 `roles/galaxy/woodpecker_ci_agent/docs/configuring-woodpecker-ci-agent.md` locally, if you have [fetched the Ansible roles](../installing.md)
 
 ### Dependencies — Woodpecker CI agent
 
 This service requires the following other services:
 
-- Woodpecker CI server — installed via this playbook or otherwise
+- Woodpecker CI server
 
 ### Configuration — Woodpecker CI agent
+
+To enable this service, add the following configuration to your `vars.yml` file and re-run the [installation](../installing.md) process:
 
 ```yaml
 ########################################################################
 #                                                                      #
-# woodpecker_ci_server                                                 #
+# woodpecker_ci_agent                                                  #
 #                                                                      #
 ########################################################################
 
 woodpecker_ci_agent_enabled: true
 
-# If the agent runs on the same machine as the server, enabling the agent
-# is everything you need. The agent and server will be wired automatically.
-#
-# Otherwise, you'll need to configure the variables below:
-
-# This needs to point to the server's gRPC host:port.
-# If your Woodpecker CI server is deployed using this playbook, its
-# gRPC port will likely be 443. E.g., ci.example.com:443.
-woodpecker_ci_agent_config_server: ''
-
-# This playbook only supports agent-specific secrets, i.e., it is not recommended to use
-# a shared secret between Woodpecker CI server and all of its agents. Please refer to
-# the following upstream documentation in order to learn how to register an agent and
-# obtain a secret for it:
-#
-#   https://woodpecker-ci.org/docs/administration/agent-config#using-agent-token
-#
-# then, when you have the agent secret, uncomment the following line.
-#woodpecker_ci_agent_config_agent_secret: ''
-
-# Uncomment the line below if you want the agent to connect to the
-# server over a secure gRPC channel (recommended).
-#woodpecker_ci_agent_config_grpc_secure: true
-
-# Uncomment the line below if you want the agent to verify the
-# server's TLS certificate when connecting over a secure gRPC channel.
-#woodpecker_ci_agent_config_grpc_verify: true
-
 ########################################################################
 #                                                                      #
-# /woodpecker_ci_server                                                #
+# /woodpecker_ci_agent                                                 #
 #                                                                      #
 ########################################################################
 ```
 
 ### Usage — Woodpecker CI agent
 
-The agent should automatically register with the [Woodpecker CI server](#woodpecker-ci-server) and take jobs from it.
+The agent should automatically register with the Woodpecker CI server and take jobs from it.
 
 ## Related services
 
 - [Forgejo Runner](forgejo-runner.md) — Runner to use with Forgejo Actions
+- [GitLab Runner](gitlab-runner.md) — Runner to use with GitLab CI/CD
