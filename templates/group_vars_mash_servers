@@ -10528,9 +10528,6 @@ loki_container_labels_traefik_tls_certResolver: "{{ traefik_certResolver_primary
 ########################################################################
 
 localai_enabled: false
-localai_uid: "{{ mash_playbook_uid }}"
-localai_uid: "{{ mash_playbook_uid }}"
-
 localai_identifier: "{{ mash_playbook_service_identifier_prefix }}localai"
 localai_base_path: "{{ mash_playbook_base_path }}/{{ mash_playbook_service_base_directory_name_prefix }}localai"
 
@@ -10549,11 +10546,6 @@ localai_container_additional_networks_auto: |
 localai_uid: "{{ mash_playbook_uid }}"
 localai_gid: "{{ mash_playbook_gid }}"
 
-localai_container_labels_traefik_enabled: "{{ mash_playbook_traefik_labels_enabled }}"
-localai_container_labels_traefik_docker_network: "{{ mash_playbook_reverse_proxyable_services_additional_network }}"
-localai_container_labels_traefik_compression_middleware_enabled: "{{ mash_playbook_reverse_proxy_traefik_middleware_compession_enabled }}"
-localai_container_labels_traefik_compression_middleware_name: "{{ mash_playbook_reverse_proxy_traefik_middleware_compession_name if mash_playbook_reverse_proxy_traefik_middleware_compession_enabled else '' }}"
-
 # role-specific:postgres
 localai_database_postgres_hostname: "{{ postgres_connection_hostname if postgres_enabled | default(false) else '' }}"
 localai_database_postgres_port: "{{ postgres_connection_port if postgres_enabled | default(false) else '5432' }}"
@@ -10562,6 +10554,10 @@ localai_database_postgres_password: "{{ (mash_playbook_generic_secret_key + ':db
 # /role-specific:postgres
 
 # role-specific:traefik
+localai_container_labels_traefik_enabled: "{{ mash_playbook_traefik_labels_enabled }}"
+localai_container_labels_traefik_docker_network: "{{ mash_playbook_reverse_proxyable_services_additional_network }}"
+localai_container_labels_traefik_compression_middleware_enabled: "{{ mash_playbook_reverse_proxy_traefik_middleware_compession_enabled }}"
+localai_container_labels_traefik_compression_middleware_name: "{{ mash_playbook_reverse_proxy_traefik_middleware_compession_name if mash_playbook_reverse_proxy_traefik_middleware_compession_enabled else '' }}"
 localai_container_labels_traefik_entrypoints: "{{ traefik_entrypoint_primary }}"
 localai_container_labels_traefik_tls_certResolver: "{{ traefik_certResolver_primary }}"
 # /role-specific:traefik
