@@ -499,6 +499,10 @@
   version: v0.6.3-5
   name: lldap
   activation_prefix: lldap_
+- src: git+https://forgejo.littlecedar.net/littlecedar/ansible-role-mash-localai.git
+  version: main
+  name: localai
+  activation_prefix: localai_
 - src: git+https://github.com/mother-of-all-self-hosting/ansible-role-loki.git
   version: v3.7.8-1
   name: loki

@@ -566,6 +566,10 @@
     - role: galaxy/lldap
     # /role-specific:lldap
 
+    # role-specific:localai
+    - role: galaxy/localai
+    # /role-specific:localai
+
     # role-specific:loki
     - role: galaxy/loki
     # /role-specific:loki
