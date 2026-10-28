@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+
+activation_prefix: nextcloud_talk_hpb_
+
+# Entries added to other components' lists, while those components are in use
+inject:
+  systemd_service_manager:
+    services:
+      - name: "{{ nextcloud_talk_hpb_signaling_identifier }}.service"
+        priority: 2000
+        restart_necessary: "{{ nextcloud_talk_hpb_signaling_restart_necessary | bool }}"
+        groups: [mash, nextcloud_talk_hpb]
+        when: "{{ nextcloud_talk_hpb_signaling_enabled }}"
+      - name: "{{ nextcloud_talk_hpb_janus_identifier }}.service"
+        priority: 2000
+        restart_necessary: "{{ nextcloud_talk_hpb_janus_restart_necessary | bool }}"
+        groups: [mash, nextcloud_talk_hpb]
+        when: "{{ nextcloud_talk_hpb_janus_enabled }}"
+      - name: "{{ nextcloud_talk_hpb_nats_identifier }}.service"
+        priority: 2000
+        restart_necessary: "{{ nextcloud_talk_hpb_nats_restart_necessary | bool }}"
+        groups: [mash, nextcloud_talk_hpb]
+        when: "{{ nextcloud_talk_hpb_nats_enabled }}"

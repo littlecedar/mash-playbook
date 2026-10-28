@@ -1,0 +1,81 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+
+# The role enables itself by default. It stays disabled, unless enabled in your inventory.
+nextcloud_talk_hpb_enabled: false
+
+nextcloud_talk_hpb_identifier: "{{ mash_playbook_service_identifier_prefix }}nextcloud_talk_hpb"
+
+nextcloud_talk_hpb_base_path: "{{ mash_playbook_base_path }}/{{ mash_playbook_service_base_directory_name_prefix }}nextcloud_talk_hpb"
+
+nextcloud_talk_hpb_uid: "{{ mash_playbook_uid }}"
+nextcloud_talk_hpb_gid: "{{ mash_playbook_gid }}"
+
+# The internal container network shared by the signaling, Janus and NATS containers.
+nextcloud_talk_hpb_container_network: "{{ nextcloud_talk_hpb_identifier }}"
+
+########################################################################
+#                                                                      #
+# signaling                                                            #
+#                                                                      #
+########################################################################
+
+nextcloud_talk_hpb_signaling_enabled: "{{ nextcloud_talk_hpb_enabled }}"
+
+nextcloud_talk_hpb_signaling_identifier: "{{ nextcloud_talk_hpb_identifier }}-signaling"
+
+nextcloud_talk_hpb_signaling_base_path: "{{ nextcloud_talk_hpb_base_path }}/signaling"
+
+nextcloud_talk_hpb_signaling_hostname: ""
+
+nextcloud_talk_hpb_signaling_http_port: 8080
+
+nextcloud_talk_hpb_signaling_sessions_hash_key: ""
+
+nextcloud_talk_hpb_signaling_restart_necessary: false
+
+nextcloud_talk_hpb_signaling_container_additional_networks_auto: |
+  {{
+    ([mash_playbook_reverse_proxyable_services_additional_network] if mash_playbook_reverse_proxyable_services_additional_network else [])
+  }}
+
+nextcloud_talk_hpb_signaling_container_labels_traefik_enabled: "{{ mash_playbook_traefik_labels_enabled }}"
+
+nextcloud_talk_hpb_signaling_container_labels_traefik_docker_network: "{{ mash_playbook_reverse_proxyable_services_additional_network }}"
+
+########################################################################
+#                                                                      #
+# janus                                                                #
+#                                                                      #
+########################################################################
+
+nextcloud_talk_hpb_janus_enabled: "{{ nextcloud_talk_hpb_enabled }}"
+
+nextcloud_talk_hpb_janus_identifier: "{{ nextcloud_talk_hpb_identifier }}-janus"
+
+nextcloud_talk_hpb_janus_base_path: "{{ nextcloud_talk_hpb_base_path }}/janus"
+
+nextcloud_talk_hpb_janus_stun_server: ""
+
+nextcloud_talk_hpb_janus_stun_port: 3478
+
+nextcloud_talk_hpb_janus_restart_necessary: false
+
+########################################################################
+#                                                                      #
+# nats                                                                 #
+#                                                                      #
+########################################################################
+
+nextcloud_talk_hpb_nats_enabled: "{{ nextcloud_talk_hpb_enabled }}"
+
+nextcloud_talk_hpb_nats_identifier: "{{ nextcloud_talk_hpb_identifier }}-nats"
+
+nextcloud_talk_hpb_nats_base_path: "{{ nextcloud_talk_hpb_base_path }}/nats"
+
+nextcloud_talk_hpb_nats_port: 4222
+
+nextcloud_talk_hpb_nats_restart_necessary: false
