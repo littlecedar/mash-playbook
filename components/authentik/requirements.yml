@@ -1,5 +1,5 @@
 ---
 
-- src: git+https://github.com/mother-of-all-self-hosting/ansible-role-authentik.git
-  version: v2026.8.2-4
+- src: git+https://github.com/littlecedar/ansible-role-authentik.git
+  version: next/lcg-changes
   name: authentik
