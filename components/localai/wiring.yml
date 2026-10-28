@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+
+# The role enables itself by default. It stays disabled, unless enabled in your inventory.
+localai_enabled: false
+
+localai_identifier: "{{ mash_playbook_service_identifier_prefix }}localai"
+
+localai_base_path: "{{ mash_playbook_base_path }}/{{ mash_playbook_service_base_directory_name_prefix }}localai"
+
+localai_uid: "{{ mash_playbook_uid }}"
+localai_gid: "{{ mash_playbook_gid }}"
+
+localai_systemd_required_services_list_auto: |
+  {{
+    ([postgres_identifier ~ '.service'] if postgres_enabled | default(false) and (localai_auth_database_postgres_hostname == postgres_connection_hostname) else [])
+  }}
+
+localai_container_additional_networks_auto: |
+  {{
+    ([mash_playbook_reverse_proxyable_services_additional_network] if mash_playbook_reverse_proxyable_services_additional_network else [])
+    +
+    ([postgres_container_network] if postgres_enabled | default(false) and (localai_auth_database_postgres_hostname == postgres_connection_hostname) and localai_container_network != postgres_container_network else [])
+  }}

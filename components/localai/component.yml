@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+
+activation_prefix: localai_
+
+# Entries added to other components' lists, while those components are in use
+inject:
+  systemd_service_manager:
+    services:
+      - name: "{{ localai_identifier }}.service"
+        priority: 2000
+        restart_necessary: "{{ localai_restart_necessary | bool }}"
+        groups: [mash, localai]
+        when: "{{ localai_enabled }}"
+  postgres:
+    managed_databases:
+      - name: "{{ localai_auth_database_name }}"
+        username: "{{ localai_auth_database_postgres_username }}"
+        password: "{{ localai_auth_database_postgres_password }}"
+        when: "{{ localai_enabled and localai_auth_enabled and localai_auth_database_postgres_hostname == postgres_connection_hostname }}"
