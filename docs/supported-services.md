@@ -116,6 +116,7 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [GoToSocial](https://gotosocial.org/) | ActivityPub federated microblogging platform | [Link](../components/gotosocial/README.md) |
 | [Grafana](https://grafana.com/) | Web-based tool for visualizing your Prometheus metrics (time-series) | [Link](../components/grafana/README.md) |
 | [Grafana Loki](https://grafana.com/docs/loki/latest/) | Log aggregation system that helps collect, store, and analyze logs in a scalable and efficient manner | [Link](../components/loki/README.md) |
+| [Greenbone](https://greenbone.github.io/docs/latest/) | Vulnerability scanner, Community Edition | [Link](../components/greenbone/README.md) |
 | [Headplane](https://headplane.net/) | Feature-complete [Tailscale Web UI](https://tailscale.com/) for Headscale | [Link](../components/headplane/README.md) |
 | [Headscale](https://headscale.net/) | A Tailscale-compatible control server for managing Tailscale devices | [Link](../components/headscale/README.md) |
 | [Healthchecks](https://healthchecks.io/) | Cron job monitoring solution | [Link](../components/healthchecks/README.md) |
@@ -148,6 +149,7 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [linkding](https://github.com/sissbruecker/linkding/) | Bookmark manager designed to be minimal and fast | [Link](../components/linkding/README.md) |
 | [Linkwarden](https://github.com/linkwarden/linkwarden) | Collaborative bookmark manager | [Link](../components/linkwarden/README.md) |
 | [listmonk](https://listmonk.app) | One-way mailing list and newsletter manager | [Link](../components/listmonk/README.md) |
+| [LiteLLM](https://github.com/BerriAI/litellm) | Service for aggregating and managing LLM inference providers | [Link](../components/litellm/README.md) |
 | [LLDAP](https://github.com/lldap/lldap/) | Lightweight authentication server that provides an opinionated, simplified LDAP interface for authentication | [Link](../components/lldap/README.md) |
 | [Lute](https://github.com/LuteOrg/lute-v3) | Learning foreign languages through reading | [Link](../components/lute/README.md) |
 | [MailCatcher](http://mailcatcher.me/) | SMTP server which catches messages sent to it and displays in a web interface | [Link](../components/mailcatcher/README.md) |
@@ -177,6 +179,7 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [Neko](https://neko.m1k1o.net/) | A virtual browser or even desktop environment | [Link](../components/neko/README.md) |
 | [NetBox](https://docs.netbox.dev/en/stable/) | Web application that provides [IP address management (IPAM)](https://en.wikipedia.org/wiki/IP_address_management) and [data center infrastructure management (DCIM)](https://en.wikipedia.org/wiki/Data_center_management#Data_center_infrastructure_management) functionality | [Link](../components/netbox/README.md) |
 | [Nextcloud](https://nextcloud.com/) | Popular collaboration solution | [Link](../components/nextcloud/README.md) |
+| [Nextcloud Talk High-Performance Backend (HPB)](https://github.com/nextcloud/talk-hpb) | High-performance backend for Nextcloud Talk, providing WebRTC signaling, a Janus WebRTC gateway, and a NATS message broker | [Link](../components/nextcloud_talk_hpb/README.md) |
 | [Nginx](https://nginx.org/) | Web server, which can also be used as a reverse proxy, load balancer and HTTP cache | [Link](../components/nginx/README.md) |
 | [noCDNbs](https://git.private.coffee/PrivateCoffee/nocdnbs) | Privacy-friendly cdnjs proxy | [Link](../components/nocdnbs/README.md) |
 | [NodeBB](https://github.com/NodeBB/NodeBB) | Node.js based forum software | [Link](../components/nodebb/README.md) |
