@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+
+activation_prefix: litellm_
+
+# Entries added to other components' lists, while those components are in use
+inject:
+  systemd_service_manager:
+    services:
+      - name: "{{ litellm_identifier }}.service"
+        priority: 2000
+        restart_necessary: "{{ litellm_restart_necessary | bool }}"
+        groups: [mash, litellm]
+        when: "{{ litellm_enabled }}"
+  postgres:
+    managed_databases:
+      - name: "{{ litellm_database_name }}"
+        username: "{{ litellm_database_postgres_username }}"
+        password: "{{ litellm_database_postgres_password }}"
+        when: "{{ litellm_enabled and litellm_database_postgres_hostname == postgres_connection_hostname }}"
