@@ -289,6 +289,7 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [YaCy](https://yacy.net) | Distributed web search engine on a P2P network | [Link](../components/yacy/README.md) |
 | [Yggstack](https://github.com/yggdrasil-network/yggstack) | SOCKS5 proxy server and TCP port forwarder for [Yggdrasil Network](https://yggdrasil-network.github.io) | [Link](../components/yggstack/README.md) |
 | [YOURLS](https://yourls.org) | Your Own URL Shortener, on your server | [Link](../components/yourls/README.md) |
+| [Zammad](https://zammad.org/) | Web-based helpdesk and customer support (ticketing) system | [Link](../components/zammad/README.md) |
 
 ### System-related components
 

@@ -1,0 +1,53 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+
+activation_prefix: zammad_
+
+# Entries added to other components' lists, while those components are in use
+inject:
+  systemd_service_manager:
+    services:
+      - name: "{{ zammad_init_identifier }}.service"
+        priority: 2000
+        restart_necessary: "{{ zammad_restart_necessary | bool }}"
+        groups: [mash, zammad]
+        when: "{{ zammad_enabled }}"
+      - name: "{{ zammad_elasticsearch_identifier }}.service"
+        priority: 2000
+        restart_necessary: "{{ zammad_restart_necessary | bool }}"
+        groups: [mash, zammad]
+        when: "{{ zammad_enabled and zammad_elasticsearch_enabled }}"
+      - name: "{{ zammad_memcached_identifier }}.service"
+        priority: 2000
+        restart_necessary: "{{ zammad_restart_necessary | bool }}"
+        groups: [mash, zammad]
+        when: "{{ zammad_enabled and zammad_memcached_enabled }}"
+      - name: "{{ zammad_railsserver_identifier }}.service"
+        priority: 2010
+        restart_necessary: "{{ zammad_restart_necessary | bool }}"
+        groups: [mash, zammad]
+        when: "{{ zammad_enabled }}"
+      - name: "{{ zammad_scheduler_identifier }}.service"
+        priority: 2020
+        restart_necessary: "{{ zammad_restart_necessary | bool }}"
+        groups: [mash, zammad]
+        when: "{{ zammad_enabled }}"
+      - name: "{{ zammad_websocket_identifier }}.service"
+        priority: 2020
+        restart_necessary: "{{ zammad_restart_necessary | bool }}"
+        groups: [mash, zammad]
+        when: "{{ zammad_enabled }}"
+      - name: "{{ zammad_nginx_identifier }}.service"
+        priority: 2030
+        restart_necessary: "{{ zammad_restart_necessary | bool }}"
+        groups: [mash, zammad]
+        when: "{{ zammad_enabled }}"
+  postgres:
+    managed_databases:
+      - name: "{{ zammad_database_name }}"
+        username: "{{ zammad_database_username }}"
+        password: "{{ zammad_database_password }}"
+        when: "{{ zammad_enabled and zammad_database_hostname == postgres_connection_hostname }}"

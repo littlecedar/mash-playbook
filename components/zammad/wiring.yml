@@ -1,0 +1,53 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+
+# The role enables itself by default. It stays disabled, unless enabled in your inventory.
+zammad_enabled: false
+
+zammad_identifier: "{{ mash_playbook_service_identifier_prefix }}zammad"
+
+zammad_base_path: "{{ mash_playbook_base_path }}/{{ mash_playbook_service_base_directory_name_prefix }}zammad"
+
+# zammad_uid and zammad_gid are left at the role's defaults (1000), because the upstream
+# Zammad image bakes in a user with that id. Do not wire them to mash_playbook_uid/gid.
+
+zammad_init_systemd_required_services_list_auto: |
+  {{
+    ([postgres_identifier ~ '.service'] if postgres_enabled | default(false) and zammad_database_hostname == postgres_connection_hostname else [])
+    +
+    ([valkey_identifier ~ '.service'] if valkey_enabled | default(false) and zammad_redis_hostname == valkey_identifier else [])
+  }}
+
+zammad_railsserver_systemd_required_services_list_auto: |
+  {{
+    ([postgres_identifier ~ '.service'] if postgres_enabled | default(false) and zammad_database_hostname == postgres_connection_hostname else [])
+    +
+    ([valkey_identifier ~ '.service'] if valkey_enabled | default(false) and zammad_redis_hostname == valkey_identifier else [])
+  }}
+
+zammad_scheduler_systemd_required_services_list_auto: |
+  {{
+    ([postgres_identifier ~ '.service'] if postgres_enabled | default(false) and zammad_database_hostname == postgres_connection_hostname else [])
+    +
+    ([valkey_identifier ~ '.service'] if valkey_enabled | default(false) and zammad_redis_hostname == valkey_identifier else [])
+  }}
+
+zammad_websocket_systemd_required_services_list_auto: |
+  {{
+    ([valkey_identifier ~ '.service'] if valkey_enabled | default(false) and zammad_redis_hostname == valkey_identifier else [])
+  }}
+
+zammad_container_additional_networks_auto: |
+  {{
+    ([mash_playbook_reverse_proxyable_services_additional_network] if mash_playbook_reverse_proxyable_services_additional_network else [])
+    +
+    ([postgres_container_network] if postgres_enabled | default(false) and zammad_database_hostname == postgres_connection_hostname and zammad_container_network != postgres_container_network else [])
+    +
+    ([valkey_container_network] if valkey_enabled | default(false) and zammad_redis_hostname == valkey_identifier and zammad_container_network != valkey_container_network else [])
+  }}
+
+zammad_nginx_container_labels_traefik_enabled: "{{ mash_playbook_traefik_labels_enabled }}"
+zammad_nginx_container_labels_traefik_docker_network: "{{ mash_playbook_reverse_proxyable_services_additional_network }}"
