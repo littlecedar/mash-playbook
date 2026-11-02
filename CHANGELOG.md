@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 2026-10-30
+
+### Woodpecker CI's directories moved
+
+Woodpecker CI's server and agent directories moved from `/mash/woodpecker-ci/server` and `/mash/woodpecker-ci/agent` to `/mash/woodpecker-ci-server` and `/mash/woodpecker-ci-agent`. Their shared parent directory was owned by the `mash` user, who could rename the agent's directory (now owned by root) and put another in its place.
+
+The next playbook run moves the server's directory, recreates the agent's, and deletes the old parent once it is empty. If you set `woodpecker_ci_server_base_path` or `woodpecker_ci_agent_base_path` in your `vars.yml`, your paths are left alone. To skip the migration, set `mash_playbook_migration_woodpecker_ci_paths_migration_enabled: false` (not recommended).
+
+### The base directory (`/mash`) is now owned by root
+
+The playbook now makes the base directory (`mash_playbook_base_path`, `/mash` by default) owned by `root`, with the `mash` group and the same mode (`0750`). Previously it was owned by the `mash` user.
+
+Whoever owns this directory can rename any service's directory in it, even one owned by root, and put another in its place. A service that runs something as root from its directory relies on this not being possible.
+
+Nothing changes for you: the services' own directories keep their owners, and the `mash` user can still reach them through the group. The next playbook run changes the owner. To keep the old owner, set `mash_playbook_base_path_uid: "{{ mash_playbook_uid }}"` in your `vars.yml` (not recommended).
+
 ## 2026-10-25
 
 ### The playbook's wiring moved from `templates/` to `components/`
