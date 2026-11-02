@@ -174,6 +174,7 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [Mosquitto](https://mosquitto.org/) | MQTT broker | [Link](../components/mosquitto/README.md) |
 | [Mozhi](https://codeberg.org/aryak/mozhi) | Frontend for translation engines | [Link](../components/mozhi/README.md) |
 | [Mumble](https://www.mumble.info/) | Voice chat application known for its low latency and high voice quality | [Link](../components/mumble/README.md) |
+| [NATS](https://nats.io/) | A lightweight publish/subscribe message broker | [Link](../components/nats/README.md) |
 | [Navidrome](https://www.navidrome.org/) | [Subsonic-API](http://www.subsonic.org/pages/api.jsp) compatible music server | [Link](../components/navidrome/README.md) |
 | [Neko](https://neko.m1k1o.net/) | A virtual browser or even desktop environment | [Link](../components/neko/README.md) |
 | [NetBox](https://docs.netbox.dev/en/stable/) | Web application that provides [IP address management (IPAM)](https://en.wikipedia.org/wiki/IP_address_management) and [data center infrastructure management (DCIM)](https://en.wikipedia.org/wiki/Data_center_management#Data_center_infrastructure_management) functionality | [Link](../components/netbox/README.md) |

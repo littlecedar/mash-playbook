@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+
+# The role enables itself by default. The service stays disabled unless a host enables it in
+# its own `inventory/host_vars/<host>/vars.yml`.
+nats_enabled: false
+
+nats_identifier: "{{ mash_playbook_service_identifier_prefix }}nats"
+
+nats_base_path: "{{ mash_playbook_base_path }}/{{ mash_playbook_service_base_directory_name_prefix }}nats"
+
+nats_uid: "{{ mash_playbook_uid }}"
+nats_gid: "{{ mash_playbook_gid }}"
+
+# Bearer token accepted by the server and presented by every client. Derived from the
+# playbook's secret key, so it needs no inventory value and stays stable across runs.
+nats_token: "{{ (mash_playbook_generic_secret_key + ':nats.token') | hash('sha512') | to_uuid }}"

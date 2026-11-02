@@ -1,0 +1,4 @@
+---
+- src: git+https://github.com/littlecedar/ansible-role-mash-nats.git
+  version: v2.15.1-0
+  name: nats

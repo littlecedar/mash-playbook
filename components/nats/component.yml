@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+
+activation_prefix: nats_
+
+# Entries added to other components' lists, while this component is in use.
+inject:
+  systemd_service_manager:
+    services:
+      - name: "{{ nats_identifier }}.service"
+        priority: 750
+        restart_necessary: "{{ nats_restart_necessary | bool }}"
+        groups: [mash, nats]
+        when: "{{ nats_enabled }}"
