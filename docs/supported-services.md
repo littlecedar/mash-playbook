@@ -179,6 +179,7 @@ Below is an exhaustive list of the free and open-source software for self-hostin
 | [Neko](https://neko.m1k1o.net/) | A virtual browser or even desktop environment | [Link](../components/neko/README.md) |
 | [NetBox](https://docs.netbox.dev/en/stable/) | Web application that provides [IP address management (IPAM)](https://en.wikipedia.org/wiki/IP_address_management) and [data center infrastructure management (DCIM)](https://en.wikipedia.org/wiki/Data_center_management#Data_center_infrastructure_management) functionality | [Link](../components/netbox/README.md) |
 | [Nextcloud](https://nextcloud.com/) | Popular collaboration solution | [Link](../components/nextcloud/README.md) |
+| [Nextcloud Talk HPB](https://github.com/strukturag/nextcloud-spreed-signaling) | High-performance backend for Nextcloud Talk, with the signaling server and the Janus MCU | [Link](../components/nextcloud_talk_hpb/README.md) |
 | [Nginx](https://nginx.org/) | Web server, which can also be used as a reverse proxy, load balancer and HTTP cache | [Link](../components/nginx/README.md) |
 | [noCDNbs](https://git.private.coffee/PrivateCoffee/nocdnbs) | Privacy-friendly cdnjs proxy | [Link](../components/nocdnbs/README.md) |
 | [NodeBB](https://github.com/NodeBB/NodeBB) | Node.js based forum software | [Link](../components/nodebb/README.md) |

@@ -1,0 +1,5 @@
+---
+
+- src: git+https://github.com/littlecedar/ansible-role-mash-nextcloud-talk-hpb.git
+  version: v1.4.3-1
+  name: nextcloud_talk_hpb

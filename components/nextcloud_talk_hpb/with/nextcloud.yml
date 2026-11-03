@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+---
+
+# `nextcloud_` prefixes `nextcloud_talk_hpb_`, so setting any of this component's variables
+# also puts the Nextcloud component in use. Derive its URL only when Nextcloud is enabled on
+# this host, where its hostname is in scope; otherwise leave it empty so the role's validation
+# asks the operator to set it for a Nextcloud on another host.
+nextcloud_talk_hpb_nextcloud_url: >-
+  {{
+    (nextcloud_scheme ~ '://' ~ nextcloud_hostname ~ nextcloud_path_prefix)
+    if ((nextcloud_enabled | default(false)) and ((nextcloud_hostname | default('')) | length > 0))
+    else ''
+  }}

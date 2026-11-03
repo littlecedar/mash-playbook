@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+---
+
+nextcloud_talk_hpb_signaling_container_labels_traefik_entrypoints: "{{ traefik_entrypoint_primary }}"
+nextcloud_talk_hpb_signaling_container_labels_traefik_tls_certResolver: "{{ traefik_certResolver_primary }}"

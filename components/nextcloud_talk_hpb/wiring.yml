@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: 2026 Travis Wichert
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+---
+
+# The role enables itself by default. The playbook keeps the service disabled, unless a
+# host enables it in its own `inventory/host_vars/<host>/vars.yml`.
+nextcloud_talk_hpb_enabled: false
+
+nextcloud_talk_hpb_identifier: "{{ mash_playbook_service_identifier_prefix }}nextcloud-talk-hpb"
+
+nextcloud_talk_hpb_base_path: "{{ mash_playbook_base_path }}/{{ mash_playbook_service_base_directory_name_prefix }}nextcloud-talk-hpb"
+
+nextcloud_talk_hpb_uid: "{{ mash_playbook_uid }}"
+nextcloud_talk_hpb_gid: "{{ mash_playbook_gid }}"
+
+# 64 bytes (sha256 hex) keeps the session hash key inside its recommended 32/64-byte range;
+# the block key must be 16, 24 or 32 bytes or the signaling server refuses to start.
+nextcloud_talk_hpb_signaling_hash_key: "{{ (mash_playbook_generic_secret_key + ':nextcloud-talk-hpb.hash') | hash('sha256') }}"
+nextcloud_talk_hpb_signaling_block_key: "{{ ((mash_playbook_generic_secret_key + ':nextcloud-talk-hpb.block') | hash('sha256'))[:32] }}"
+nextcloud_talk_hpb_signaling_internal_shared_secret_key: "{{ (mash_playbook_generic_secret_key + ':nextcloud-talk-hpb.internal') | hash('sha512') }}"
+
+nextcloud_talk_hpb_proxy_network: "{{ mash_playbook_reverse_proxyable_services_additional_network }}"
+
+nextcloud_talk_hpb_signaling_container_labels_traefik_enabled: "{{ mash_playbook_traefik_labels_enabled }}"
+nextcloud_talk_hpb_signaling_container_labels_traefik_docker_network: "{{ mash_playbook_reverse_proxyable_services_additional_network }}"
