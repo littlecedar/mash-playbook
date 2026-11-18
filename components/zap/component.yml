@@ -5,6 +5,7 @@
 ---
 
 activation_prefix: zap_
+description: Runs an OWASP ZAP daemon for the Little Cedar MASH playbook.
 
 setup:
   entry:

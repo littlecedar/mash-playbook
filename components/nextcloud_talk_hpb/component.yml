@@ -5,6 +5,7 @@
 ---
 
 activation_prefix: nextcloud_talk_hpb_
+description: A High Performance Backend (HPB) for Nextcloud Talk
 
 # Entries added to other components' lists, while those components are in use
 inject:
@@ -12,21 +13,21 @@ inject:
     services:
       - name: "{{ nextcloud_talk_hpb_identifier }}.service"
         priority: 2000
-        restart_necessary: nextcloud_talk_hpb_restart_necessary
+        restart_necessary: "{{ nextcloud_talk_hpb_restart_necessary }}"
         groups: ['mash', 'talk_hpb']
-        when: nextcloud_talk_hpb_enabled
+        when: "{{ nextcloud_talk_hpb_enabled }}"
       - name: "{{ nextcloud_talk_hpb_signaling_identifier }}.service"
         priority: 2000
-        restart_necessary: nextcloud_talk_hpb_signaling_restart_necessary
+        restart_necessary: "{{ nextcloud_talk_hpb_signaling_restart_necessary }}"
         groups: ['mash', 'talk_hpb']
-        when: nextcloud_talk_hpb_signaling_enabled
+        when: "{{ nextcloud_talk_hpb_signaling_enabled }}"
       - name: "{{ nextcloud_talk_hpb_nats_identifier }}.service"
         priority: 2000
-        restart_necessary: nextcloud_talk_hpb_nats_restart_necessary
+        restart_necessary: "{{ nextcloud_talk_hpb_nats_restart_necessary }}"
         groups: ['mash', 'talk_hpb']
-        when: nextcloud_talk_hpb_nats_enabled
+        when: "{{ nextcloud_talk_hpb_nats_enabled }}"
       - name: "{{ nextcloud_talk_hpb_janus_identifier }}.service"
         priority: 2000
-        restart_necessary: nextcloud_talk_hpb_janus_restart_necessary
+        restart_necessary: "{{ nextcloud_talk_hpb_janus_restart_necessary }}"
         groups: ['mash', 'talk_hpb']
-        when: nextcloud_talk_hpb_janus_enabled
+        when: "{{ nextcloud_talk_hpb_janus_enabled }}"

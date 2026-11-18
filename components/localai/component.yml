@@ -13,10 +13,11 @@ inject:
       - name: "{{ localai_identifier }}.service"
         priority: 2000
         groups: [mash, localai]
-        when: localai_enabled
+        when: "{{ localai_enabled }}"
+        restart_necessary: "{{ localai_restart_necessary }}"
   postgres:
     managed_databases:
-      name: "{{ localai_auth_database_name }}"
-      username: "{{ localai_authn_database_postgres_username }}"
-      password: "{{ localai_authn_database_postgres_password }}"
-      when: "{{ localai_enabled and localai_auth_enabled and (localai_auth_database_postgres_hostname == postgres_connection_hostname) }}"
+      - name: "{{ localai_auth_database_name }}"
+        username: "{{ localai_authn_database_postgres_username }}"
+        password: "{{ localai_authn_database_postgres_password }}"
+        when: "{{ localai_enabled and localai_auth_enabled and (localai_auth_database_postgres_hostname == postgres_connection_hostname) }}"

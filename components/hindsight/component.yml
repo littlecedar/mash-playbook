@@ -8,8 +8,8 @@ activation_prefix: hindsight_
 description: State of the art long-term memory for your agents.
 
 inject:
-  systemd:
-    managed_services:
+  systemd_service_manager:
+    services:
       - name: "{{ hindsight_api_identifier }}.service"
         priority: 2000
         restart_necessary: "{{ hindsight_api_restart_necessary }}"

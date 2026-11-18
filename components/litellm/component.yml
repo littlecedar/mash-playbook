@@ -5,6 +5,7 @@
 ---
 
 activation_prefix: litellm_
+description: LiteLLM is one gateway for all your models, tools, and agents.
 
 # Entries added to other components' lists, while those components are in use
 inject:
@@ -13,7 +14,8 @@ inject:
     - name: "{{ litellm_identifier }}.service"
       priority: 2000
       groups: [mash, litellm]
-      when: litellm_enabled
+      when: "{{ litellm_enabled }}"
+      restart_necessary: "{{ litellm_restart_necessary }}"
   postgres:
     managed_databases:
       - name: "{{ litellm_database_name }}"
